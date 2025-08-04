@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TGenericErrorResponse, TValidation } from '../interfaces/error.types';
 
 export const handleMongooseValidationError = (

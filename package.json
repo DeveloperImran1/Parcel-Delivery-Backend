@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "main": "server.ts",
   "scripts": {
+    "start": "node ./dist/server.js",
+    "build": "tsc",
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts",
     "lint": "npx eslint ./src",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,14 +27,24 @@
   },
   "dependencies": {
     "@types/cookie-parser": "^1.4.9",
+    "@types/ejs": "^3.1.5",
+    "@types/multer": "^2.0.0",
+    "@types/nodemailer": "^6.4.17",
     "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.7.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
     "dotenv": "^17.2.1",
+    "ejs": "^3.1.10",
     "express": "^5.1.0",
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.0",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^7.0.5",
+    "redis": "^5.7.0",
     "zod": "^4.0.14"
   }
 }
