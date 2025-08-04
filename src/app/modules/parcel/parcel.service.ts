@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-dynamic-delete */
 import httpStatus from 'http-status-codes';
@@ -267,7 +268,7 @@ const updateParcel = async (
     const newLog: IStatusLog = {
       status: payload.status,
       updatedBy: decodedToken.userId,
-      note: payload?.note,
+      note: (payload as any).note || '', // fallback to empty string if not provided
     };
     payload.statusLogs = [...(isExistParcel.statusLogs as []), newLog];
   }
