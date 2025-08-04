@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextFunction, Request, Response } from 'express';
+import { deleteImageFromCloudinary } from '../config/cloudinrary.config';
 import { envVars } from '../config/env';
 import AppError from '../errorHelpers/AppError';
 import { handleCastError } from '../helpers/handleCastError';
@@ -16,16 +17,16 @@ export const globalErrorHandler = async (
   next: NextFunction,
 ) => {
   // single image upload er por data create or update a kono error hole .
-  //   if (req.file) {
-  //     await deleteImageFromCloudinary(req.file.path);
-  //   }
+  if (req.file) {
+    await deleteImageFromCloudinary(req.file.path);
+  }
 
-  //   // multiple image delete korar jonno
-  //   if (req.files && Array.isArray(req.files) && req.files.length > 0) {
-  //     const imagesUrl = req.files.map((file) => file.path);
+  // multiple image delete korar jonno
+  if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+    const imagesUrl = req.files.map((file) => file.path);
 
-  //     await Promise.all(imagesUrl.map((url) => deleteImageFromCloudinary(url)));
-  //   }
+    await Promise.all(imagesUrl.map((url) => deleteImageFromCloudinary(url)));
+  }
 
   let statusCode = 500;
   let message = `Something went wrong`;

@@ -121,9 +121,9 @@ const getAllReciver = catchAsync(
 
 const updateUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const payload = req.body;
     const userId = req.params.id;
 
+    const payload = { ...req.body, picture: req.file?.path };
     const verifiedToken: any = req.user;
 
     const user = await UserServices.updateUser(userId, payload, verifiedToken);

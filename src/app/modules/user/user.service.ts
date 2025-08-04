@@ -65,9 +65,7 @@ const getSingleUser = async (decodedToken: JwtPayload, userId: string) => {
 };
 
 const getAllUser = async (query: Record<string, string>) => {
-  console.log('get all user er moddhe');
   const queryBuilder = new QueryBuilder(User.find(), query);
-  console.log('get all user er middle');
   const users = await queryBuilder
     .search(userSearchableFields)
     .filter()
@@ -138,6 +136,7 @@ const updateUser = async (
   }
 
   if (payload?.isBlocked || payload?.role || payload?.isVerified) {
+    // ami admin na hole error diba
     if (verifiedToken.role !== Role.ADMIN) {
       throw new AppError(httpStatus.BAD_REQUEST, 'You are not authorized');
     }
@@ -149,6 +148,14 @@ const updateUser = async (
     ) {
       throw new AppError(httpStatus.BAD_REQUEST, 'You are not authorized');
     }
+  }
+
+  // akjon admin arekjon admin er info change korte parbena.
+  if (
+    isUserExist.role === Role.ADMIN &&
+    isUserExist._id !== verifiedToken.userId
+  ) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'You are not authorized');
   }
 
   const newUpdatedUser = await User.findByIdAndUpdate(userId, payload, {
