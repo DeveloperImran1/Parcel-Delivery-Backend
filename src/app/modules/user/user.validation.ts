@@ -15,16 +15,16 @@ export const createUserZodSchema = z.object({
 
   password: z
     .string({ message: 'Password must be a string' })
-    .min(8, { message: 'Password must be at least 8 characters long' })
-    .regex(/(?=.*[A-Z])/, {
-      message: 'Password must include at least one uppercase letter',
-    })
-    .regex(/(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/, {
-      message: 'Password must include at least one special character',
-    })
-    .regex(/(?=.*\d)/, {
-      message: 'Password must include at least one number',
-    }),
+    .min(8, { message: 'Password must be at least 8 characters long' }),
+  // .regex(/(?=.*[A-Z])/, {
+  //   message: 'Password must include at least one uppercase letter',
+  // })
+  // .regex(/(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?])/, {
+  //   message: 'Password must include at least one special character',
+  // })
+  // .regex(/(?=.*\d)/, {
+  //   message: 'Password must include at least one number',
+  // }),
 
   role: z.enum(Object.values(Role) as [string]).optional(),
 });
