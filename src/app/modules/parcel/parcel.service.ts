@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable @typescript-eslint/no-dynamic-delete */
 import httpStatus from 'http-status-codes';
 import { JwtPayload } from 'jsonwebtoken';
@@ -72,7 +73,7 @@ const createParcel = async (
   const statusLogs: [IStatusLog] = [
     {
       status: 'Requested',
-      updatedBy: payload.sender,
+      updatedBy: payload.sender!,
       note: 'Sender create a new Parcel',
     },
   ];

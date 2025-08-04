@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import bcryptjs from 'bcryptjs';
 import httpStatus from 'http-status-codes';
@@ -48,6 +49,7 @@ const setPassword = async (userId: string, plainPassword: string) => {
   // jodi google dia login kore thake, and password already set kore thake. Tahole ai api error throw korbe. Karon aita password reset korar jonno noi. Sudho jei user ra google dia login korese. Tara credential login system available korte chai. Tader jonno 1st time akbar password set korar system aita.
   if (
     user.password &&
+    user.auths &&
     user.auths.some((authObject) => authObject.provider == 'google')
   ) {
     throw new AppError(
@@ -57,7 +59,10 @@ const setPassword = async (userId: string, plainPassword: string) => {
   }
 
   // aikhane user.auth.some()  -> method dara mean kore, er moddhe jei function ase. Sei function er kono conditaion match korlei output true return korbe.
-  if (user.auths.some((authObject) => authObject.provider == 'credentials')) {
+  if (
+    user.auths &&
+    user.auths.some((authObject) => authObject.provider == 'credentials')
+  ) {
     throw new AppError(
       httpStatus.BAD_REQUEST,
       'You are loged in with credential. So you can reset your password. You cannot set password.',
@@ -75,7 +80,7 @@ const setPassword = async (userId: string, plainPassword: string) => {
     provider: 'credentials',
     providerId: user.email,
   };
-  const auths: IAuthProvider[] = [...user.auths, credentialProvider];
+  const auths: IAuthProvider[] = [...(user.auths ?? []), credentialProvider];
 
   user.auths = auths;
 
