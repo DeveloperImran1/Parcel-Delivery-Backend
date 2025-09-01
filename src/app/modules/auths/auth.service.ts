@@ -18,6 +18,9 @@ const credentialsLogin = async (payload: Partial<IUser>) => {
   if (!isUserExist) {
     throw new AppError(httpStatus.BAD_REQUEST, 'User not found');
   }
+  if (!isUserExist.isVerified) {
+    throw new AppError(httpStatus.BAD_GATEWAY, 'User not verified');
+  }
 
   const isPasswordMatched = await bcryptjs.compare(
     password as string,

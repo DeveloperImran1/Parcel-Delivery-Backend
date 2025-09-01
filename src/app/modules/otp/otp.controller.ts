@@ -7,8 +7,8 @@ import { OTPServices } from './otp.service';
 
 const sendOTP = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { email, name } = req.body;
-    await OTPServices.sendOTP(email, name);
+    const { email } = req.body;
+    await OTPServices.sendOTP(email);
 
     sendResponse(res, {
       success: true,

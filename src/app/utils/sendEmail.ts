@@ -34,30 +34,34 @@ export const sendEmail = async ({
   subject,
   templateName,
   templateData,
-  attachments,
+  attachments = [],
 }: SendEmailOptions) => {
   try {
     // Aikhane templateName holo utils > templates folder er moddhe kon file ta send korbo email er body te. Sei file er name ta sudho. Ex: "forgetPassword"
     // Akhon sei file name and folderName dia akta full directory name create kore templatePath a rakhtesi.
     const templatePath = path.join(__dirname, `templates/${templateName}.ejs`);
     const html = await ejs.renderFile(templatePath, templateData); // ejs npm package er maddhome templatePath and oi file a dynamic data gulo send korar jonno templateData object akare dita hobe. Tahole fully akta dynamic html file generate kore diba.
+
     const info = await transporter.sendMail({
       from: envVars.EMAIL_SENDER.SMTP_FROM,
       to: to,
       subject: subject,
       html: html,
       // attachment optional. Aitar maddhome bivinno file attach kore dewa jai.
-      attachments: attachments?.map((attachment) => ({
-        filename: attachment.filename,
-        content: attachment.content,
-        contentType: attachment.contentType,
-      })),
+      attachments:
+        attachments.length > 0
+          ? attachments?.map((attachment) => ({
+              filename: attachment.filename,
+              content: attachment.content,
+              contentType: attachment.contentType,
+            }))
+          : undefined,
     });
 
     // Aikhane dynamic vabe akta console kora hoisa. Jeita email er id and kon user ke ki email send kora hoisa. Seita console korbe.
     console.log(`\u2709\uFE0F Email sent to ${to}: ${info.messageId}`);
   } catch (error: any) {
     console.log('email sending error', error.message);
-    throw new AppError(401, 'Email error');
+    throw new AppError(500, `Email error: ${error.message}`);
   }
 };

@@ -173,10 +173,7 @@ const updateParcel = async (
     }
 
     // parcel er status jodi Dispatched already hooia jai. tahole edit korte parbena
-    if (
-      isExistParcel.status !== 'Requested' &&
-      isExistParcel.status !== 'Approved'
-    ) {
+    if (isExistParcel?.status == 'Dispatched') {
       throw new AppError(
         httpStatus.BAD_REQUEST,
         'This parcel already dispatched',
@@ -184,7 +181,7 @@ const updateParcel = async (
     }
 
     // sender sudho status ke cancled korte parbe, onno kiso korte parbena.
-    if (payload.status !== 'Cancelled') {
+    if (payload?.status && payload?.status !== 'Cancelled') {
       throw new AppError(
         httpStatus.BAD_REQUEST,
         `You cannont set ${payload.status}`,
@@ -251,7 +248,7 @@ const updateParcel = async (
       Requested: ['Approved', 'Cancelled'],
       Approved: ['Dispatched', 'Cancelled'],
       Dispatched: ['In Transit', 'Cancelled'],
-      'In Transit': [],
+      'In Transit': ['Delivered'],
       Delivered: [],
       Cancelled: [],
     };

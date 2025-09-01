@@ -123,7 +123,6 @@ const getAllReciver = catchAsync(
 const updateUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = req.params.id;
-
     const payload = { ...req.body, picture: req.file?.path };
     const verifiedToken: any = req.user;
 

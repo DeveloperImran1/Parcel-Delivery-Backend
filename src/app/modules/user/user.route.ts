@@ -34,6 +34,7 @@ router.get('/:id', checkAuth(Role.ADMIN), UserControllers.getSingleUser);
 router.patch(
   '/:id',
   checkAuth(...Object.values(Role)),
+
   multerUpload.single('file'),
   validateRequest(updateUserZodSchema),
   UserControllers.updateUser,

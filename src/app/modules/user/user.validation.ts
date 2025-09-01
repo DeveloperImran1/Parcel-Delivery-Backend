@@ -32,8 +32,8 @@ export const createUserZodSchema = z.object({
 export const updateUserZodSchema = z.object({
   name: z
     .string({ message: 'Name must be a string' })
-    .min(5, { message: 'Name length must be at least 5 characters' })
-    .max(100, { message: 'Name length must not exceed 100 characters' })
+    // .min(5, { message: 'Name length must be at least 5 characters' })
+    // .max(100, { message: 'Name length must not exceed 100 characters' })
     .optional(),
 
   // Password validation moved to a separate route, as noted
