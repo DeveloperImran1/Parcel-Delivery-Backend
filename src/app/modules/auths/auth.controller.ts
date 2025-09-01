@@ -66,13 +66,25 @@ const logout = catchAsync(
     // Kono user Login ase kina seita ensure hote pari, browser er cookie te accessToken and refreshToken ase kina. Seita check kori. So logout korar jonno accessToken and refreshToken remove korte parle kella fote.
     res.clearCookie('accessToken', {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+
+      // localhost a aivabe dita hobe
+      // secure: false,
+      // sameSite: 'lax',
+
+      // code live a jawer pore
+      secure: true,
+      sameSite: 'none',
     });
     res.clearCookie('refreshToken', {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+
+      // localhost a aivabe dita hobe
+      // secure: false,
+      // sameSite: 'lax',
+
+      // code live a jawer pore
+      secure: true,
+      sameSite: 'none',
     });
 
     sendResponse(res, {
